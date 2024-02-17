@@ -6,6 +6,9 @@ colorBtns = document.querySelectorAll(".colors .option"),
 colorPicker = document.querySelector("#color-picker"),
 clearCanvas = document.querySelector(".clear-canvas"),
 saveImg = document.querySelector(".save-img"),
+appBackground = document.querySelector(".app-background"),
+app = document.querySelector("#app"),
+appBlock = document.querySelector(".app"),
 ctx = canvas.getContext("2d");
 
 let prevMouseX, prevMouseY, snapshot,
@@ -14,24 +17,16 @@ selectedTool = "brush",
 brushWidth = 5,
 selectedColor = "#000";
 
-// window.addEventListener("resize", () => {
-//     canvas.width = canvas.offsetWidth;
-//     canvas.height = canvas.offsetHeight;
-// })
-
 const setCanvasBackground = () => {
     ctx.fillStyle = "#fff";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = selectedColor;
 }
-
-
 window.addEventListener("load", () => {
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
     setCanvasBackground();
 });
-
 // drawRect
 const drawRect = (e) => {
     if(!fillColor.checked)
@@ -40,7 +35,6 @@ const drawRect = (e) => {
     }
     ctx.fillRect(e.offsetX, e.offsetY, prevMouseX - e.offsetX, prevMouseY - e.offsetY);
 }
-
 // drawCircle
 const drawCircle = (e) => {
     ctx.beginPath();
@@ -57,13 +51,10 @@ const drawTriangle = (e) => {
     ctx.closePath();
     fillColor.checked ? ctx.fill() : ctx.stroke();
 }
-
 // drawing
 const drawing = (e) => {
     if(!isDrawing) return;
-
     ctx.putImageData(snapshot, 0, 0);
-
     if(selectedTool === "brush" || selectedTool === "eraser")
     {
         ctx.strokeStyle = selectedTool === "eraser" ? "#fff" : selectedColor;
@@ -80,7 +71,6 @@ const drawing = (e) => {
         drawTriangle(e);
     }
 }
-
 // startDraw
 const startDraw = (e) => {
     isDrawing = true;
@@ -92,12 +82,10 @@ const startDraw = (e) => {
     ctx.fillStyle = selectedColor;
     snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
 }
-
 // stopDraw
 const stopDraw = (e) => {
     isDrawing = false;
 }
-
 toolBtns.forEach(btn => {
     btn.addEventListener("click", () => {
         document.querySelector(".options .active").classList.remove("active");
@@ -106,11 +94,9 @@ toolBtns.forEach(btn => {
         console.log(selectedTool);
     });
 });
-
 sizeSlider.addEventListener("change", (e) => {
     brushWidth = sizeSlider.value;
 });
-
 colorBtns.forEach(btn => {
     btn.addEventListener("click", () => {
         document.querySelector(".options .selected").classList.remove("selected");
@@ -118,25 +104,28 @@ colorBtns.forEach(btn => {
         selectedColor = window.getComputedStyle(btn).getPropertyValue("background-color");
     });
 });
-
 colorPicker.addEventListener("change", () => {
     colorPicker.parentElement.style.background = colorPicker.value;
     colorPicker.parentElement.click();
 });
-
 clearCanvas.addEventListener("click", () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     setCanvasBackground();
 });
-
 saveImg.addEventListener("click", () => {
     const link = document.createElement("a");
     link.download = `${Date.now()}.jpg`;
     link.href = canvas.toDataURL();
     link.click();
 });
-
-
+appBackground.addEventListener("click", () => {
+    appBackground.style.display = "none";
+    appBlock.style.display = "none";
+});
+app.addEventListener("click", () => {
+    appBackground.style.display = "block";
+    appBlock.style.display = "block";
+});
 canvas.addEventListener("mouseup", stopDraw);
 canvas.addEventListener("mousedown", startDraw);
 canvas.addEventListener("mousemove", drawing);
