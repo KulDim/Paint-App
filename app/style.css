@@ -1,6 +1,8 @@
 *{
     padding: 0;
     margin: 0;
+    font-size: 18px;
+    font-weight: 600;
 }
 
 body{
@@ -19,10 +21,6 @@ body{
 
 section{
     background-color: white;   
-}
-
-.drawing-board{
-    flex: 1;
 }
 
 .tools-board{
@@ -45,6 +43,7 @@ section{
     margin-bottom: 10px;
     cursor: pointer;
 }
+
 .option:is(:hover, .active) img{
     filter: invert(17%) sepia(90%) saturate(3000%) hue-rotate(900deg) brightness(100%) contrast(100%);
 }
@@ -84,26 +83,28 @@ section{
     margin-top: 3px;
     position: relative;
 }
+
 .colors .option:nth-child(1){
-    background: #fff;
+    background-color: #fff;
     border: 1px solid #bfbfbf;
 }
 
 .colors .option:nth-child(2){
-    background: #000;
+    background-color: #000;
 }
 
 .colors .option:nth-child(3){
-    background: #ff0000;
+    background-color: #ff0000;
 }
 
 .colors .option:nth-child(4){
-    background: #00fd4c;
+    background-color: #00fd4c;
 }
 
 .colors .option:nth-child(5){
-    background: #4A98F7;
+    background-color: #4A98F7;
 }
+
 .colors .option.selected::before{
     position: absolute;
     content: "";
@@ -120,6 +121,7 @@ section{
 .colors .option:first-child.selected::before{
     border-color: #ccc;
 }
+
 .option #color-picker{
     opacity: 0;
     cursor: pointer;
@@ -138,6 +140,11 @@ section{
     cursor: pointer;
 }
 
+input[type="range"] {
+    accent-color: #4A98F7;
+    background: #c5c5c5;
+}
+
 .buttons .clear-canvas{
     color: #6c6c6c;
     border: 1px solid #6c6c6c;
@@ -147,7 +154,6 @@ section{
 .buttons .clear-canvas:hover{
     color: #fff;
     background: #6c6c6c;
-
 }
 
 .buttons .save-img{
@@ -155,7 +161,20 @@ section{
     border: 1px solid #4A98F7;
 }
 
-
 #fill-color:checked ~ label{
     color: #4A98F7;
+}
+
+.drawing-board{
+    flex: 1;
+}
+
+.drawing-board canvas{
+    width: 100%;
+    height: 100%;
+}
+
+img{
+    width: 20px;
+    height: 20px;
 }
